@@ -1,0 +1,11 @@
+on: [push]
+
+jobs:
+  build:
+  name: Getting started with actions
+  runs-on: ubuntu-latest
+  steps:
+  - uses: actions/checkout@v2
+  - name: Some Random Message
+    run: |
+      echo This is my first github actions implementation
