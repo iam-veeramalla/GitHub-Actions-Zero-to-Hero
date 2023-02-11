@@ -1,0 +1,50 @@
+name: build flask-docker image then deploy it to aws EC2.
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  EC2_PRIVATE_SSH_KEY: ${{ secrets.EC2_PRIVATE_SSH_KEY }} # Used to ssh into EC2.
+  EC2_PUBLIC_IP: ${{ secrets.EC2_PUBLIC_IP }}
+
+
+jobs:
+  build-and-run-docker-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+    
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push dockerized flask image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask_app:latest
+
+    - name: Install Docker and Deploy the image on EC2
+      uses: appleboy/ssh-action@v0.1.7
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      with:
+        host: ${{ env.EC2_PUBLIC_IP }}
+        username: ec2-user
+        key: ${{ env.EC2_PRIVATE_SSH_KEY }}
+        envs: DOCKERHUB_USERNAME
+        script: |
+          sudo yum update -y
+          sudo amazon-linux-extras install docker -y
+          sudo service docker start
+          sudo usermod -a -G docker ec2-user
+          docker pull $DOCKERHUB_USERNAME/flask_app:latest
+          docker run -d -p 80:5000 $DOCKERHUB_USERNAME/flask_app:latest
