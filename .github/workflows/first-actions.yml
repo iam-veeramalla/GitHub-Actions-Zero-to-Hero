@@ -8,9 +8,8 @@ jobs:
 
     steps:
     - name: Setup Terraform v1.1.7
-      uses: hashicorp/setup-Terraform@v2
+      uses: hashicorp/setup-terraform@v2
       with:
-        terraform_version: 1.1.7
         terraform_wrapper: false
     
     - name: Setup Terraform version
