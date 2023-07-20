@@ -1,4 +1,4 @@
-name: My First GitHub Actions Testing:2
+name: My First GitHub Actions Testing:3
 
 on: [push]
 
