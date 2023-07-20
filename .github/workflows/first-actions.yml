@@ -3,9 +3,9 @@ name: My First GitHub Actions Testing:2
 on: [push]
 
 jobs:
-  build:
+  terrafrom-version:
+    name: terrafrom-version
     runs-on: self-hosted
-
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -13,7 +13,7 @@ jobs:
     - name: Setup Terraform v1.1.7
       uses: hashicorp/setup-terraform@v2
       with:
-        terraform_wrapper: false
+        terraform_version: 1.1.7
     
     - name: Setup Terraform version
       run: terraform --version
