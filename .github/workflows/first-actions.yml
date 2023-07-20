@@ -6,23 +6,12 @@ jobs:
   build:
     runs-on: self-hosted
 
-    strategy:
-      matrix:
-        python-version: [3.8, 3.9]
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pytest
-
-    - name: Run tests
-      run: |
-        cd src
-        python -m pytest addition.py
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Terragrunt
+        uses: autero1/action-terragrunt@v1.1.0
+        with:
+          terragrunt_version: 0.21.13
+      - name: Interact with Terragrunt
+        run: terragrunt --version
