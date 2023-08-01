@@ -9,6 +9,32 @@ jobs:
     steps:
         - name: Checkout
           uses: actions/checkout@v3
+
+        - name: Install 'hub' command
+          shell: bash
+          run: |
+            # Install 'hub' to interact with GitHub via CLI
+            # Replace 'YOUR_GITHUB_USERNAME' with your actual GitHub username
+            # GitHub Actions provides GITHUB_ACTOR environment variable with the username
+            # to get the user who triggered the workflow.
+            wget https://github.com/github/hub/releases/download/v2.14.2/hub-linux-amd64-2.14.2.tgz
+            tar xvf hub-linux-amd64-2.14.2.tgz
+            sudo ./hub-linux-amd64-2.14.2/install    
+
+        - name: Set up Git
+          shell: bash
+          run: |
+            git config --global user.name "pkj1993"
+            git config --global user.email "pkj161293@gmail.com"
+            git config --global hub.protocol https
+
+        - name: Fetch GitHub tags using Personal Access Token (PAT)
+          shell: bash
+          run: |
+            echo -n "${{ secrets.PAT }}" > ~/.ghtoken
+            hub api /repos/YOUR_USERNAME/YOUR_REPOSITORY/git/refs/tags | jq -r '.[].ref' | awk -F"/" '{print $NF}' > tags.txt
+            cat tags.txt  
+
         - name: tag action run
           uses: ./.github/workflows/action/tagcreate
 
