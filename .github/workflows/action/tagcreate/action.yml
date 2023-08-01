@@ -9,6 +9,28 @@ runs:
         with:
           python-version: '3.x'  # Specify the Python version you want to use
 
+      - name: Install 'hub' command
+        run: |
+            # Install 'hub' to interact with GitHub via CLI
+            # Replace 'YOUR_GITHUB_USERNAME' with your actual GitHub username
+            # GitHub Actions provides GITHUB_ACTOR environment variable with the username
+            # to get the user who triggered the workflow.
+            wget https://github.com/github/hub/releases/download/v2.14.2/hub-linux-amd64-2.14.2.tgz
+            tar xvf hub-linux-amd64-2.14.2.tgz
+            sudo ./hub-linux-amd64-2.14.2/install    
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "pkj1993"
+          git config --global user.email "pkj161293@gmail.com"
+          git config --global hub.protocol https
+
+      - name: Fetch GitHub tags using Personal Access Token (PAT)
+        run: |
+          echo -n "${{ secrets.REPO_TOKEN }}" > ~/.ghtoken
+          hub api /repos/YOUR_USERNAME/YOUR_REPOSITORY/git/refs/tags | jq -r '.[].ref' | awk -F"/" '{print $NF}' > tags.txt
+          cat tags.txt    
+
       - name: Execute Python script for Symmetric Version Generation
         shell: bash
         run: python ./.github/workflows/action/tagcreate/symmetric_version.py
