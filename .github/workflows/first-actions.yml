@@ -1,12 +1,7 @@
 name: My First GitHub Actions Testing:3
 
 on:
-  Push:
-    branches: [Master]
-  Pull_request:
-    branches: [Master]
   workflow_dispatch:
-    inputs:
 jobs:
   Projrct-tag:
     name:Projrct-tag:
