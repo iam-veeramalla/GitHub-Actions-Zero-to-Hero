@@ -1,6 +1,6 @@
 name: My First GitHub Actions Testing:3
 
-on: [push]
+on: [pull_request]
 
 jobs:
   terrafrom-version:
