@@ -6,6 +6,8 @@ jobs:
   Projrct-tag:
     name: Projrct-tag1
     runs-on: ubuntu-latest
+    env:  # Define environment variables
+      GITHUB_TOKEN: ${{ secrets.PAT }}
     steps:
         - name: Checkout
           uses: actions/checkout@v3
@@ -27,6 +29,15 @@ jobs:
             git config --global user.name "pkj1993"
             git config --global user.email "pkj161293@gmail.com"
             git config --global hub.protocol https
+
+        - name: Fetch the latest tag
+          run: |
+           latest_tag=$(git describe --tags --abbrev=0)
+          echo "Latest tag: $latest_tag"
+           if [ -z "$latest_tag" ]; then
+           hub release create -m "Initial release" "v1.0.0"
+           echo "Initial tag v1.0.0 created."
+           fi
 
         - name: Fetch GitHub tags using Personal Access Token (PAT)
           shell: bash
