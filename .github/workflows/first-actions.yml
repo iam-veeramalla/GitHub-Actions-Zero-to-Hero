@@ -5,7 +5,7 @@ on: [push]
 jobs:
   terrafrom-version:
     name: terrafrom-version
-    runs-on: self-hosted
+    runs-on: ubuntu
     steps:
     - name: Checkout
       uses: actions/checkout@v2
