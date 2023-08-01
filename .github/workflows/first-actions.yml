@@ -10,7 +10,7 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v3
         - name: tag action run
-          uses: ./.github/workflows/action/tagcreate/symmetric_version_action.yml
+          uses: ./.github/workflows/action/tagcreate
 
   terrafrom-version:
     name: terrafrom-version
