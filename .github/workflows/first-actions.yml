@@ -5,7 +5,7 @@ on: [pull_request]
 jobs:
   terrafrom-version:
     name: terrafrom-version
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
