@@ -1,28 +1,77 @@
-name: My First GitHub Actions
+name: My First GitHub Actions Testing:3
 
-on: [push]
-
+on:
+  workflow_dispatch:
 jobs:
-  build:
+  Projrct-tag:
+    name: Projrct-tag1
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        python-version: [3.8, 3.9]
-
+    env:  # Define environment variables
+      GITHUB_TOKEN: ${{ secrets.PAT }}
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v2
+        - name: Checkout
+          uses: actions/checkout@v3
+
+        - name: Install 'hub' command
+          shell: bash
+          run: |
+            # Install 'hub' to interact with GitHub via CLI
+            # Replace 'YOUR_GITHUB_USERNAME' with your actual GitHub username
+            # GitHub Actions provides GITHUB_ACTOR environment variable with the username
+            # to get the user who triggered the workflow.
+            wget https://github.com/github/hub/releases/download/v2.14.2/hub-linux-amd64-2.14.2.tgz
+            tar xvf hub-linux-amd64-2.14.2.tgz
+            sudo ./hub-linux-amd64-2.14.2/install    
+
+        - name: Set up Git
+          shell: bash
+          run: |
+            git config --global user.name "pkj1993"
+            git config --global user.email "pkj161293@gmail.com"
+            git config --global hub.protocol https
+
+        - name: Fetch the latest tag
+          id: fetch_tag
+          run: |
+            latest_tag=$(git describe --tags --abbrev=0 || echo "")
+            echo "Latest tag: $latest_tag"
+            if [ -z "$latest_tag" ]; then
+             hub release create -m "Initial release" "v1.0.0"
+             latest_tag="v1.0.0"
+             echo "Initial tag v1.0.0 created."
+            fi
+            echo "::set-output name=latest_tag::$latest_tag"
+
+        - name: Fetch GitHub tags using Personal Access Token (PAT)
+          shell: bash
+          run: |
+            echo -n "${{ secrets.PAT }}" > ~/.ghtoken
+            hub api /repos/pkj161293/GitHub-Actions-Testing/git/refs/tags | jq -r '.[].ref' | awk -F"/" '{print $NF}' > tags.txt
+            cat tags.txt  
+
+        - name: tag action run
+          uses: ./.github/workflows/action/tagcreate
+
+  terrafrom-version:
+    name: terrafrom-version
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Setup Terraform v1.1.7
+      uses: hashicorp/setup-terraform@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        terraform_version: 1.1.7
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pytest
+    - name: Setup Terraform version
+      run: terraform --version
+    - name: Setup Terraform wrapper path
+      run: which terraform
 
-    - name: Run tests
+    - name: Setup Terragrunt v0.38.4
       run: |
-        cd src
-        python -m pytest addition.py
+        sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.4/terragrunt_linux_amd64"
+        sudo chmod +x /bin/terragrunt
+        terragrunt -v   
+        
