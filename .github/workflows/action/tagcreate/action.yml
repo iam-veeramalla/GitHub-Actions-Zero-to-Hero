@@ -9,4 +9,5 @@ runs:
           python-version: '3.x'  # Specify the Python version you want to use
 
       - name: Execute Python script for Symmetric Version Generation
+        shell: bash
         run: python symmetric_version.py
