@@ -11,4 +11,4 @@ runs:
 
       - name: Execute Python script for Symmetric Version Generation
         shell: bash
-        run: python symmetric_version.py
+        run: python ./.github/workflows/action/tagcreate/symmetric_version.py
