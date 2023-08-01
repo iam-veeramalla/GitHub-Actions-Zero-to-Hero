@@ -30,7 +30,7 @@ runs:
       - name: Fetch GitHub tags using Personal Access Token (PAT)
         shell: bash
         run: |
-          echo -n "${{ secrets.REPO_TOKEN }}" > ~/.ghtoken
+          echo -n "${{ secrets.PAT }}" > ~/.ghtoken
           hub api /repos/YOUR_USERNAME/YOUR_REPOSITORY/git/refs/tags | jq -r '.[].ref' | awk -F"/" '{print $NF}' > tags.txt
           cat tags.txt    
 
@@ -38,4 +38,4 @@ runs:
         shell: bash
         run: python ./.github/workflows/action/tagcreate/symmetric_version.py
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
