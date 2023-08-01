@@ -12,3 +12,5 @@ runs:
       - name: Execute Python script for Symmetric Version Generation
         shell: bash
         run: python ./.github/workflows/action/tagcreate/symmetric_version.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
