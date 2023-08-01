@@ -6,14 +6,16 @@ on:
   Pull_request:
     branches: [Master]
   workflow_dispatch:
+    inputs:
 jobs:
   Projrct-tag:
     name:Projrct-tag:
       runs-on: ubuntu-latest
       steps:
         - name: Checkout
-          uses: actions/checkout@v2
+          uses: actions/checkout@v3
         - name: tag action run
+          uses: ./.github/workflows/action/tagcreate/symmetric_version_action.yml
 
   terrafrom-version:
     name: terrafrom-version
