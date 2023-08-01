@@ -32,7 +32,7 @@ jobs:
           shell: bash
           run: |
             echo -n "${{ secrets.PAT }}" > ~/.ghtoken
-            hub api /repos/YOUR_USERNAME/YOUR_REPOSITORY/git/refs/tags | jq -r '.[].ref' | awk -F"/" '{print $NF}' > tags.txt
+            hub api /repos/pkj161293/GitHub-Actions-Testing/git/refs/tags | jq -r '.[].ref' | awk -F"/" '{print $NF}' > tags.txt
             cat tags.txt  
 
         - name: tag action run
