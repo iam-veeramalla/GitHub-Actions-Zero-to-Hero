@@ -13,4 +13,4 @@ runs:
         shell: bash
         run: python ./.github/workflows/action/tagcreate/symmetric_version.py
         env:
-          GITHUB_TOKEN: ${{ secrets.Repo_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
