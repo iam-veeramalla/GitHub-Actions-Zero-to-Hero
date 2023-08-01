@@ -5,8 +5,11 @@ def get_latest_tag():
     try:
         tags_output = subprocess.check_output(["git", "ls-remote", "--tags", "origin"])
         tags_list = tags_output.decode("utf-8").strip().split("\n")
-        latest_tag = max(tags_list, key=lambda x: [int(d) for d in re.findall(r'\d+', x)])
-        return latest_tag.strip()
+        latest_tag = max(tags_list, key=lambda x: [int(d) for d in re.findall(r'\d+', x)], default=None)
+        if latest_tag:
+            return latest_tag.strip()
+        else:
+            raise RuntimeError("No GitHub tags found.")
     except subprocess.CalledProcessError:
         raise RuntimeError("Failed to get the latest GitHub tag.")
 
