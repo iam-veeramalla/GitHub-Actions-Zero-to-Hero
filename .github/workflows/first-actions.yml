@@ -32,12 +32,12 @@ jobs:
 
         - name: Fetch the latest tag
           run: |
-           latest_tag=$(git describe --tags --abbrev=0)
-          echo "Latest tag: $latest_tag"
-           if [ -z "$latest_tag" ]; then
-           hub release create -m "Initial release" "v1.0.0"
-           echo "Initial tag v1.0.0 created."
-           fi
+            latest_tag=$(git describe --tags --abbrev=0)
+            echo "Latest tag: $latest_tag"
+            if [ -z "$latest_tag" ]; then
+              hub release create -m "Initial release" "v1.0.0"
+              echo "Initial tag v1.0.0 created."
+            fi
 
         - name: Fetch GitHub tags using Personal Access Token (PAT)
           shell: bash
