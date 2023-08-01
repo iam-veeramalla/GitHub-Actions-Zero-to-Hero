@@ -1,8 +1,20 @@
 name: My First GitHub Actions Testing:3
 
-on: [pull_request]
-
+on:
+  Push:
+    branches: [Master]
+  Pull_request:
+    branches: [Master]
+  workflow_dispatch:
 jobs:
+  Projrct-tag:
+    name:Projrct-tag:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+        - name: tag action run
+
   terrafrom-version:
     name: terrafrom-version
     runs-on: ubuntu-latest
