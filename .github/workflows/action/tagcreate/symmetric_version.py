@@ -11,11 +11,11 @@ def get_latest_tag():
         raise RuntimeError("Failed to get the latest GitHub tag.")
 
 def symmetric_increment_version(version):
-    parts = version.split('.')
-    if len(parts) != 3:
-        raise ValueError("Invalid version format. Expected 'major.minor.patch'.")
+    match = re.match(r'^(\d+)\.(\d+)\.(\d+)$', version)
+    if not match:
+        raise ValueError(f"Invalid version format: {version}. Expected 'major.minor.patch'.")
 
-    major, minor, patch = map(int, parts)
+    major, minor, patch = map(int, match.groups())
     new_version = f"{minor}.{major}.{patch}"
     return new_version
 
