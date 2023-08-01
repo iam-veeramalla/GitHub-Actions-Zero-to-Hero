@@ -1,15 +1,4 @@
-name: Symmetric Version Generation
-
-on:
-  push:
-    branches:
-      - master
-
-jobs:
-  symmetric_version:
-    name: Generate Symmetric Version
-    runs-on: ubuntu-latest
-
+runs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
