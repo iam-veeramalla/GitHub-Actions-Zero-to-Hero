@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 jobs:
   Projrct-tag:
-    name: Projrct-tag
+    name: Projrct-tag1
     runs-on: ubuntu-latest
     steps:
         - name: Checkout
