@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
 jobs:
   Projrct-tag:
-    name:Projrct-tag:
-      runs-on: ubuntu-latest
-      steps:
+    name: Projrct-tag
+    runs-on: ubuntu-latest
+    steps:
         - name: Checkout
           uses: actions/checkout@v3
         - name: tag action run
@@ -23,12 +23,12 @@ jobs:
       uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.1.7
-    
+
     - name: Setup Terraform version
       run: terraform --version
     - name: Setup Terraform wrapper path
       run: which terraform
-      
+
     - name: Setup Terragrunt v0.38.4
       run: |
         sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.4/terragrunt_linux_amd64"
