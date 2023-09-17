@@ -1,6 +1,12 @@
 name: My First GitHub Actions
 
 on: [push]
+  workflow_dispatch:
+      inputs:
+        tagid:
+           description: 'tagid'
+           required: true
+           default: "provide tagid'
 
 jobs:
   build:
