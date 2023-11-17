@@ -1,4 +1,4 @@
-name: My First GitHub Actions
+name: checjing First GitHub Actions
 
 on:
  push:
