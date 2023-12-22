@@ -1,0 +1,17 @@
+name : contrsuct the db
+
+description: A nfjkdkldlhvhhh
+
+inputs:
+   product:
+     description: 'product name'
+     required: 'true'
+     
+    schema:
+
+      descriptipon:
+      required: true
+
+
+
+      
