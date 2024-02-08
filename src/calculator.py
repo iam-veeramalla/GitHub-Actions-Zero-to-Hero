@@ -32,5 +32,6 @@ class TestExpressionEvaluation(unittest.TestCase):
         expression = "(3 + 4 * 2"
         assert not has_balanced_parentheses(expression)
 
+# Rename the file to something else (e.g., expression_evaluator.py)
 if __name__ == '__main__':
     unittest.main()
