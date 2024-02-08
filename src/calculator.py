@@ -24,14 +24,13 @@ class TestExpressionEvaluation(unittest.TestCase):
         expression = "3 + 4 * 2"
         assert evaluate_expression(expression) == 11
 
-    def test_valid_expression(self):
-        expression = "(3 + 4 * 2)*10"
-        assert evaluate_expression(expression) == 110
+    def test_invalid_expression(self):
+        expression = "3 + 4 * 2)"
+        assert "Error: unexpected EOF while parsing" in evaluate_expression(expression)
 
-    def test_valid_expression(self):
-        expression = "3 + 0*4 * 2"
-        assert evaluate_expression(expression) == 3
+    def test_unbalanced_parentheses(self):
+        expression = "(3 + 4 * 2"
+        assert not has_balanced_parentheses(expression)
 
-    
 if __name__ == '__main__':
     unittest.main()
