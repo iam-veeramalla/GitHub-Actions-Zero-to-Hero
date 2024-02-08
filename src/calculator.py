@@ -1,3 +1,5 @@
+import unittest
+
 def evaluate_expression(expression):
     try:
         result = eval(expression)
@@ -5,10 +7,6 @@ def evaluate_expression(expression):
     except Exception as e:
         return f"Error: {e}"
 
-# Example usage:
-expression = input("Enter an expression to evaluate: ")
-
-# Check if the expression has balanced parentheses
 def has_balanced_parentheses(expression):
     stack = []
     for char in expression:
@@ -20,8 +18,19 @@ def has_balanced_parentheses(expression):
             stack.pop()
     return len(stack) == 0
 
-if has_balanced_parentheses(expression):
-    result = evaluate_expression(expression)
-    print("Result:", result)
-else:
-    print("Error: Unbalanced parentheses in the expression.")
+class TestExpressionEvaluation(unittest.TestCase):
+
+    def test_valid_expression(self):
+        expression = "3 + 4 * 2"
+        self.assertEqual(evaluate_expression(expression), 11)
+
+    def test_invalid_expression(self):
+        expression = "3 + 4 * 2)"
+        self.assertTrue("Error: unexpected EOF while parsing" in evaluate_expression(expression))
+
+    def test_unbalanced_parentheses(self):
+        expression = "(3 + 4 * 2"
+        self.assertFalse(has_balanced_parentheses(expression))
+
+if __name__ == '__main__':
+    unittest.main()
