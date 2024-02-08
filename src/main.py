@@ -26,11 +26,11 @@ class TestExpressionEvaluation(unittest.TestCase):
 
     def test_invalid_expression(self):
         expression = "3 +( 4 * 2)"
-         assert evaluate_expression(expression) == 11
+        assert evaluate_expression(expression) == 11
 
     def test_unbalanced_parentheses(self):
         expression = "(3 + 4) * 2"
-         assert evaluate_expression(expression) == 14
+        assert evaluate_expression(expression) == 14
 
 # Rename the file to something else (e.g., expression_evaluator.py)
 if __name__ == '__main__':
