@@ -18,4 +18,5 @@ jobs:
 
     - name: Run tests
       run: |
-        python -m unittest test_expression.py
+        cd src
+        python -m unittest main.py
